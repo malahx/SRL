@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRL", "SRL.csproj", "{34F11EDC-879E-4D0E-BA4C-45C6FB6AC5AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34F11EDC-879E-4D0E-BA4C-45C6FB6AC5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F11EDC-879E-4D0E-BA4C-45C6FB6AC5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F11EDC-879E-4D0E-BA4C-45C6FB6AC5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F11EDC-879E-4D0E-BA4C-45C6FB6AC5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SRL.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		description = @Simulate, Revert & Launch\nA plugin for Kerbal Space Program\nCopyright 2014 Malah
+		version = 0.10
+	EndGlobalSection
+EndGlobal
