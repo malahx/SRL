@@ -19,12 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #### What is it ?
 
 SRL is a small plugin which add the possibility to :
-- simulate a rocket from Kerbin without save/return to spacecenter,
+- simulate a rocket from Kerbin without save/return to spacecenter/recover,
 - launch a rocket from Kerbin without revert/quicksave/quickload.
 
 THIS MOD IS IN BETA !
 
-This mod will change your save game, I suggest you to backup your save game before to install it.
+This mod will change your save game, I suggest you back up your save game before you install it.
 
 #### How to install it ?
 
@@ -33,12 +33,12 @@ Put the SRL folder in your KSP/GameData folder.
 
 #### How to uninstall it ?
 
-Delete the SRL folder of your KSP/GameData folder.
-Edit your save game to re-enable variables that are explained bellow, some of this variables can be edit with the Debug toolbar.
+Delete the SRL folder in your KSP/GameData folder.
+Edit your save game to re-enable variables that are explained bellow, some of this variables can be edited with the Debug toolbar.
 
 #### How does it work ?
 
-In concrete this mod will change several variables of your save game as:
+Concretely this mod will change several variables of your save game as:
 CanRestart
 CanLeaveToEditor
 CanQuickLoad
@@ -53,7 +53,7 @@ CanLeaveToSpaceCenter
 
 #### Troubleshooting ?
 
-This mod will not work fine with all other mods that will lock/unlock the recovery button, as multiplayer's mods.
+This mod will not work well with all other mods that will lock/unlock the recovery button, such as multiplayer's mods.
 
 #### CHANGELOG
 
@@ -62,14 +62,14 @@ Initial beta release
 
 ### Planned updates/new features
 
-Correct the cheated quicksave / quickload which can be use with two differents simulations.
+Correct the cheated quicksave / quickload which can be used with two differents simulations.
 
-Money is needed to make a simulation.
+Money will be needed to make a simulation.
 
-Simulation could be try on all other planet that you have already reached.
+Simulation could be tried on all other planets that you have already reached.
 
 Add a configuration panel to disable some functions.
 
 ### Thanks !
 
-Thanks to regex for his HardMode
+Thanks to regex for his HardMode and to Squad for this awesome game :)
