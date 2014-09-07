@@ -1,0 +1,18 @@
+﻿{
+	"NAME":"Simulate, Revert & Launch",
+	"URL":"https://github.com/malahx/SRL/blob/master/SRL.version",
+	"DOWNLOAD":"http://forum.kerbalspaceprogram.com/threads/92973",
+	"VERSION":
+	{
+		"MAJOR":0,
+		"MINOR":2,
+		"PATCH":0,
+		"BUILD":1
+	},
+	"KSP_VERSION":
+	{
+		"MAJOR":0,
+		"MINOR":24
+		"PATCH":2
+	}
+}
