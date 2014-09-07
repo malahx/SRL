@@ -1,18 +1,36 @@
 ﻿{
-	"NAME":"Simulate, Revert & Launch",
-	"URL":"https://raw.githubusercontent.com/malahx/SRL/master/SRL.version",
-	"DOWNLOAD":"http://forum.kerbalspaceprogram.com/threads/92973",
-	"VERSION":
-	{
-		"MAJOR":0,
-		"MINOR":2,
-		"PATCH":0,
-		"BUILD":1
-	},
-	"KSP_VERSION":
-	{
-		"MAJOR":0,
-		"MINOR":24
-		"PATCH":2
-	}
+    "NAME":"Simulate, Revert & Launch",
+    "URL":"https://raw.githubusercontent.com/malahx/SRL/master/SRL.version",
+    "DOWNLOAD":"http://forum.kerbalspaceprogram.com/threads/92973",
+    "GITHUB":
+    {
+        "USERNAME":"malahx",
+        "REPOSITORY":"SRL",
+        "ALLOW_PRE_RELEASE":false,
+    },
+    "VERSION":
+    {
+        "MAJOR":2,
+        "MINOR":0,
+        "PATCH":0,
+        "BUILD":0
+    },
+    "KSP_VERSION":
+    {
+        "MAJOR":0,
+        "MINOR":24,
+        "PATCH":2
+    },
+    "KSP_VERSION_MIN":
+    {
+        "MAJOR":0,
+        "MINOR":24,
+        "PATCH":0
+    },
+    "KSP_VERSION_MAX":
+    {
+        "MAJOR":0,
+        "MINOR":24,
+        "PATCH":2
+    }
 }
