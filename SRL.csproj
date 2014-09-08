@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SRL</RootNamespace>
     <AssemblyName>SRL</AssemblyName>
-    <ReleaseVersion>0.10</ReleaseVersion>
+    <ReleaseVersion>0.20</ReleaseVersion>
     <Description>Simulate, Revert &amp; Launch
 A plugin for Kerbal Space Program
 Copyright 2014 Malah</Description>
@@ -34,6 +34,7 @@ Copyright 2014 Malah</Description>
         <Command type="AfterBuild" command="cp /home/malah/Code/SRL/bin/Release/SRL.dll /home/malah/Code/SRL/GameData/SRL/Plugins/" />
         <Command type="AfterBuild" command="cp /home/malah/Code/SRL/README.md /home/malah/Code/SRL/GameData/SRL/" />
         <Command type="AfterBuild" command="cp /home/malah/Code/SRL/COPYING /home/malah/Code/SRL/GameData/SRL/" />
+        <Command type="AfterBuild" command="cp /home/malah/Code/SRL/SRL.version /home/malah/Code/SRL/GameData/SRL/SRL.version" />
         <Command type="AfterBuild" command="cp -rf /home/malah/Code/SRL/GameData/SRL/ &quot;/home/malah/.local/share/Steam/SteamApps/common/Kerbal Space Program/GameData/&quot;" />
       </CustomCommands>
     </CustomCommands>
@@ -72,5 +73,7 @@ Copyright 2014 Malah</Description>
     <None Include="GameData\SRL\README.md" />
     <None Include="GameData\SRL\Plugins\SRL.dll" />
     <None Include="GameData\SRL\Textures\sim.png" />
+    <None Include="SRL.version" />
+    <None Include="GameData\SRL\SRL.version" />
   </ItemGroup>
 </Project>

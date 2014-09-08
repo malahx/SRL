@@ -1,5 +1,5 @@
 ﻿/* 
-Simulate, Revert & Launch v0.10
+Simulate, Revert & Launch
 Copyright 2014 Malah
 
 This program is free software: you can redistribute it and/or modify
@@ -24,18 +24,34 @@ namespace SRL {
 	[KSPAddon(KSPAddon.Startup.EditorAny | KSPAddon.Startup.TrackingStation | KSPAddon.Startup.Flight | KSPAddon.Startup.SpaceCentre, false)]
 	public class SRL : MonoBehaviour {
 
+		public const string VERSION = "0.20";
+
 		// Initialiser les variables
 		private ApplicationLauncherButton SRLSim;
 		private GUIStyle SRLtext;
 		private VesselRecoveryButton SRLrecoverybutton = null;
+		private int SRLindex = 0;
+		private string SRLsimtext = "SIMULATION";
+
 		[KSPField(isPersistant = true)]
 		public static bool isSimulate = false;
+		[KSPField(isPersistant = true)]
+		private static GameBackup SRLPostInitState;
+		[KSPField(isPersistant = true)]
+		private static GameBackup SRLPreLaunchState;
+		[KSPField(isPersistant = true)]
+		private static Game SRLFlightStateCache;
+
 		private bool SRLlastIsSimulate = !isSimulate;
 
 		// Préparer les variables et les évènements
 		private void Awake() {
 			GameEvents.onGUIApplicationLauncherReady.Add (OnGUIApplicationLauncherReady);
 			GameEvents.onLaunch.Add (OnLaunch);
+			GameEvents.onGameStateSaved.Add (OnGameStateSaved);
+			GameEvents.onFlightReady.Add (OnFlightReady);
+			GameEvents.onCrewOnEva.Add (OnCrewOnEva);
+			GameEvents.onCrewBoardVessel.Add (OnCrewBoardVessel);
 			this.SRLtext = new GUIStyle ();
 			this.SRLtext.stretchWidth = true;
 			this.SRLtext.stretchHeight = true;
@@ -62,10 +78,64 @@ namespace SRL {
 			}
 		}
 
+		// Activer le quickload après un quicksave
+		private void OnGameStateSaved(Game game) {
+			if (isSimulate && HighLogic.LoadedSceneIsFlight) {
+				HighLogic.CurrentGame.Parameters.Flight.CanQuickLoad = true;
+				print ("SRL"+VERSION+": Quickload ON");
+			}
+		}
+
+		// Activer le revert après un quickload
+		private void OnFlightReady() {
+			if (FlightGlobals.ActiveVessel.situation == Vessel.Situations.PRELAUNCH) {
+				SRLFlightStateCache = FlightDriver.FlightStateCache;
+				SRLPostInitState = FlightDriver.PostInitState;
+				SRLPreLaunchState = FlightDriver.PreLaunchState;
+				print ("SRL"+VERSION+": Revert saved");
+			} else {
+				FlightDriver.FlightStateCache = SRLFlightStateCache;
+				// PostInitState seem to doesn't work ...
+				FlightDriver.PostInitState = SRLPostInitState;
+				FlightDriver.PreLaunchState = SRLPreLaunchState;
+				print ("SRL"+VERSION+": Revert loaded");
+			}
+		}
+
+		// Supprimer le bouton de simulation à l'EVA
+		private void OnCrewOnEva(GameEvents.FromToAction<Part, Part> part) {
+			if (part.from.vessel.situation == Vessel.Situations.PRELAUNCH && ApplicationLauncher.Ready) {
+				this.SRLSim.VisibleInScenes = ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH;
+			}
+		}
+
+		// Remettre le bouton de simulation après l'EVA
+		private void OnCrewBoardVessel(GameEvents.FromToAction<Part, Part> part) {
+			if (part.from.vessel.situation == Vessel.Situations.PRELAUNCH && ApplicationLauncher.Ready) {
+				this.SRLSim.VisibleInScenes = ApplicationLauncher.AppScenes.FLIGHT | ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH;
+			}
+		}
+
+		// Supprimer le bouton de simulation et les évènements
+		private void OnDestroy() {
+			GameEvents.onGUIApplicationLauncherReady.Remove (OnGUIApplicationLauncherReady);
+			GameEvents.onLaunch.Remove (OnLaunch);
+			GameEvents.onGameStateSaved.Remove (OnGameStateSaved);
+			GameEvents.onFlightReady.Remove (OnFlightReady);
+			GameEvents.onCrewOnEva.Remove (OnCrewOnEva);
+			GameEvents.onCrewBoardVessel.Remove (OnCrewBoardVessel);
+			if (this.SRLSim != null) {
+				ApplicationLauncher.Instance.RemoveModApplication (this.SRLSim);
+				this.SRLSim = null;
+			}
+		}
+
+		// Activer la simulation à l'aide du bouton
 		private void SRLSimOn() {
 			isSimulate = true;
 		}
 
+		// Désactiver la simulation à l'aide du bouton
 		private void SRLSimOff() {
 			isSimulate = false;
 		}
@@ -76,6 +146,14 @@ namespace SRL {
 				if (this.SRLSim.State != RUIToggleButton.ButtonState.TRUE) {
 					this.SRLSim.SetTrue ();
 				}
+				if (HighLogic.LoadedSceneIsFlight) {
+					if (FlightGlobals.ActiveVessel.landedAt == "") {
+						this.SRLSim.VisibleInScenes = ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH;
+					}
+					FlightDriver.CanRevertToPostInit = true;
+					FlightDriver.CanRevertToPrelaunch = true;
+					QuickSaveLoad.fetch.AutoSaveOnQuickSave = false;
+				}
 			}
 			InputLockManager.RemoveControlLock ("SRLquicksave");
 			InputLockManager.RemoveControlLock ("SRLquickload");
@@ -83,7 +161,7 @@ namespace SRL {
 			InputLockManager.SetControlLock (ControlTypes.VESSEL_SWITCHING, "SRLvesselswitching");
 			HighLogic.CurrentGame.Parameters.Flight.CanRestart = true;
 			HighLogic.CurrentGame.Parameters.Flight.CanLeaveToEditor = true;
-			HighLogic.CurrentGame.Parameters.Flight.CanQuickLoad = true;
+			HighLogic.CurrentGame.Parameters.Flight.CanQuickLoad = false;
 			HighLogic.CurrentGame.Parameters.Flight.CanQuickSave = true;
 			HighLogic.CurrentGame.Parameters.Flight.CanLeaveToTrackingStation = false;
 			HighLogic.CurrentGame.Parameters.Flight.CanSwitchVesselsNear = false;
@@ -92,7 +170,7 @@ namespace SRL {
 			HighLogic.CurrentGame.Parameters.Flight.CanBoard = false;
 			HighLogic.CurrentGame.Parameters.Flight.CanAutoSave = false;
 			HighLogic.CurrentGame.Parameters.Flight.CanLeaveToSpaceCenter = false;
-			print ("SRL: Simulation ON");
+			print ("SRL"+VERSION+": Simulation ON");
 		}
 
 		// Désactiver la simulation
@@ -105,6 +183,9 @@ namespace SRL {
 					if (FlightGlobals.ActiveVessel.landedAt == "") {
 						this.SRLSim.VisibleInScenes = ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH;
 					}
+					FlightDriver.CanRevertToPostInit = false;
+					FlightDriver.CanRevertToPrelaunch = false;
+					QuickSaveLoad.fetch.AutoSaveOnQuickSave = false;
 				}
 			}
 			InputLockManager.SetControlLock (ControlTypes.QUICKSAVE, "SRLquicksave");
@@ -122,17 +203,8 @@ namespace SRL {
 			HighLogic.CurrentGame.Parameters.Flight.CanBoard = true;
 			HighLogic.CurrentGame.Parameters.Flight.CanAutoSave = true;
 			HighLogic.CurrentGame.Parameters.Flight.CanLeaveToSpaceCenter = true;
-			print ("SRL: Simulation OFF");
-		}
-
-		// Supprimer le bouton de simulation et les évènements
-		private void OnDestroy() {
-			GameEvents.onGUIApplicationLauncherReady.Remove (OnGUIApplicationLauncherReady);
-			GameEvents.onLaunch.Remove (OnLaunch);
-			if (this.SRLSim != null) {
-				ApplicationLauncher.Instance.RemoveModApplication (this.SRLSim);
-				this.SRLSim = null;
-			}
+			this.SRLindex = 0;
+			print ("SRL"+VERSION+": Simulation OFF");
 		}
 
 		// Mettre à jours les variables de simulation et désactiver le bouton de récupération si la fusée est au sol de Kerbin
@@ -157,12 +229,12 @@ namespace SRL {
 								this.SRLrecoverybutton.slidingTab.toggleMode = ScreenSafeUISlideTab.ToggleMode.EXTERNAL;
 								this.SRLrecoverybutton.slidingTab.Collapse ();
 								this.SRLrecoverybutton.ssuiButton.Lock ();
-								print ("SRL: Recovery locked");
+								print ("SRL"+VERSION+": Recovery locked");
 							} else if (!isSimulate && this.SRLrecoverybutton.slidingTab.toggleMode == ScreenSafeUISlideTab.ToggleMode.EXTERNAL) {
 								this.SRLrecoverybutton = (VesselRecoveryButton)GameObject.FindObjectOfType (typeof(VesselRecoveryButton));
 								this.SRLrecoverybutton.slidingTab.toggleMode = ScreenSafeUISlideTab.ToggleMode.HOVER;
 								this.SRLrecoverybutton.ssuiButton.Unlock ();
-								print ("SRL: Recovery unlocked");
+								print ("SRL"+VERSION+": Recovery unlocked");
 							}
 						}
 					}
@@ -175,8 +247,11 @@ namespace SRL {
 			if (HighLogic.LoadedSceneIsEditor || HighLogic.LoadedSceneIsFlight) {
 				if (isSimulate) {
 					GUILayout.BeginArea (new Rect (0, (Screen.height / 10), Screen.width, 80), this.SRLtext);
-					GUILayout.Label ("SIMULATION", this.SRLtext);
+					GUILayout.Label (this.SRLsimtext.Substring(0, (this.SRLindex / 2)), this.SRLtext);
 					GUILayout.EndArea ();
+					if (this.SRLindex < (this.SRLsimtext.Length * 2)) {
+						this.SRLindex++;
+					}
 				}
 			}
 		}

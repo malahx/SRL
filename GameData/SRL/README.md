@@ -1,5 +1,5 @@
 ﻿#### Simulate, Revert & Launch
-#### A plugin for Kerbal Space Program
+#### A plugin for Kerbal Space Program 0.24.2
 #### Copyright 2014 Malah
 
 This program is free software: you can redistribute it and/or modify
@@ -18,13 +18,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #### What is it ?
 
-SRL is a small plugin which add the possibility to :
-- simulate a rocket from Kerbin without save/return to spacecenter,
+SRL is a small plugin which add the possibility to:
+- simulate a rocket from Kerbin without save/return to spacecenter/recover,
 - launch a rocket from Kerbin without revert/quicksave/quickload.
 
 THIS MOD IS IN BETA !
 
-This mod will change your save game, I suggest you to backup your save game before to install it.
+This mod will change your save game, I suggest you back up your save game before you install it.
 
 #### How to install it ?
 
@@ -33,43 +33,52 @@ Put the SRL folder in your KSP/GameData folder.
 
 #### How to uninstall it ?
 
-Delete the SRL folder of your KSP/GameData folder.
-Edit your save game to re-enable variables that are explained bellow, some of this variables can be edit with the Debug toolbar.
+Delete the SRL folder in your KSP/GameData folder.
+Edit your save game to re-enable variables that are explained bellow, some of this variables can be edited with the Debug toolbar.
 
 #### How does it work ?
 
-In concrete this mod will change several variables of your save game as:
-CanRestart
-CanLeaveToEditor
-CanQuickLoad
-CanQuickSave
-CanLeaveToTrackingStation
-CanSwitchVesselsNear
-CanSwitchVesselsFar
-CanEVA
-CanBoard
-CanAutoSave
-CanLeaveToSpaceCenter
+Concretely this mod will change several variables of your save game as:
+- CanRestart
+- CanLeaveToEditor
+- CanQuickLoad
+- CanQuickSave
+- CanLeaveToTrackingStation
+- CanSwitchVesselsNear
+- CanSwitchVesselsFar
+- CanEVA
+- CanBoard
+- CanAutoSave
+- CanLeaveToSpaceCenter
 
 #### Troubleshooting ?
 
-This mod will not work fine with all other mods that will lock/unlock the recovery button, as multiplayer's mods.
+This mod will not work well with all other mods that will lock/unlock the recovery button, such as multiplayer's mods.
 
-#### CHANGELOG
+#### Changelog
+
+v0.20 - 2014.09.07
+Second beta release
+Fix:
+Corrected the quickload:
+- now after a quickload, you can revert to the launch (meaning you can disable the simulation and go to the space center, revert to the editor doesn't work though),
+- you can't quickload from another simulation (with the GUI this is yet possible),
+- you can't disable a simulation after a quickload.
+The simulation's button is disabled when you are in EVA on the launchpad.
 
 v0.10 - 2014.09.05
-Initial beta release
+Initial beta release.
 
-### Planned updates/new features
+#### Thanks !
 
-Correct the cheated quicksave / quickload which can be use with two differents simulations.
+to regex for his HardMode, 
+to magico13 for his KCT,
+to my friend Neimad who corrects my bad english ...
+and to Squad for this awesome game 
 
-Money is needed to make a simulation.
+#### Links
 
-Simulation could be try on all other planet that you have already reached.
-
-Add a configuration panel to disable some functions.
-
-### Thanks !
-
-Thanks to regex for his HardMode
+http://forum.kerbalspaceprogram.com/threads/92973
+http://beta.kerbalstuff.com/mod/145
+http://kerbal.curseforge.com/ksp-mods/224071
+https://github.com/malahx/SRL
