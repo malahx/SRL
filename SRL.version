@@ -1,16 +1,1 @@
-﻿{
-	"NAME": "Simulate, Revert & Launch",
-	"URL": "https://bitbucket.org/Malahx/srl/raw/03f1a3a3b334d2198912ce068abf3d22c1d38480/SRL.version",
-	"DOWNLOAD": "https://beta.kerbalstuff.com/mod/145",
-	"VERSION": {
-		"MAJOR": 0,
-		"MINOR": 2,
-		"PATCH": 0
-	},
-	"KSP_VERSION": {
-		"MAJOR": 0,
-		"MINOR": 24,
-		"PATCH": 2
-	}
-}
-
+{"NAME":"Simulate, Revert & Launch","URL":"http://ksp-avc.cybutek.net/version.php?id=32","DOWNLOAD":"http://beta.kerbalstuff.com/mod/145","CHANGE_LOG_URL":"","VERSION":{"MAJOR":0,"MINOR":2,"PATCH":0,"BUILD":0},"KSP_VERSION":{"MAJOR":0,"MINOR":24,"PATCH":2}}
