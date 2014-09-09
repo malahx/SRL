@@ -33,8 +33,7 @@ Put the SRL folder in your KSP/GameData folder.
 
 #### How to uninstall it ?
 
-Delete the SRL folder in your KSP/GameData folder.
-Edit your save game to re-enable variables that are explained bellow, some of this variables can be edited with the Debug toolbar.
+On the space center, you need to open the SRL configuration and disabled SRL, now you can shutdown your game and delete the SRL folder in your KSP/GameData folder.
 
 #### How does it work ?
 
@@ -56,6 +55,10 @@ Concretely this mod will change several variables of your save game as:
 This mod will not work well with all other mods that will lock/unlock the recovery button, such as multiplayer's mods.
 
 #### Changelog
+
+v0.30 - 2014.09
+New: Add a panel to configure SRL.
+Fix: Now you can EVA and switch near vessel in simulation.
 
 v0.20 - 2014.09.07
 Second beta release

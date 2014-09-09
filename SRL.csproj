@@ -75,5 +75,6 @@ Copyright 2014 Malah</Description>
     <None Include="GameData\SRL\Textures\sim.png" />
     <None Include="SRL.version" />
     <None Include="GameData\SRL\SRL.version" />
+    <None Include="GameData\SRL\config.txt" />
   </ItemGroup>
 </Project>
