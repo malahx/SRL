@@ -43,10 +43,7 @@ Concretely this mod will change several variables of your save game as:
 - CanQuickLoad
 - CanQuickSave
 - CanLeaveToTrackingStation
-- CanSwitchVesselsNear
 - CanSwitchVesselsFar
-- CanEVA
-- CanBoard
 - CanAutoSave
 - CanLeaveToSpaceCenter
 
@@ -56,7 +53,7 @@ This mod will not work well with all other mods that will lock/unlock the recove
 
 #### Changelog
 
-v0.30 - 2014.09
+v0.30 - not published
 New: Add a panel to configure SRL.
 Fix: Now you can EVA and switch near vessel in simulation.
 
