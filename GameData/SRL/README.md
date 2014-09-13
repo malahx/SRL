@@ -54,7 +54,7 @@ v1.00 - 2014.09.14
 First release
 - New: Added a configuration panel.
 - New: Added a persistent file config per saved game.
-- New: Added the gestion of the credits, reputation and science.
+- New: Added the management of the credits, reputation and science.
 - Fix: EVA on the launchpad have been corrected.
 - Fix: allowed EVA and switch near vessel in simulation.
 
