@@ -22,18 +22,15 @@ SRL is a small plugin which add the possibility to:
 - simulate a rocket from Kerbin without save/return to spacecenter/recover,
 - launch a rocket from Kerbin without revert/quicksave/quickload.
 
-THIS MOD IS IN BETA !
-
 This mod will change your save game, I suggest you back up your save game before you install it.
 
 #### How to install it ?
 
-Unzip all files
-Put the SRL folder in your KSP/GameData folder.
+Unzip all files. Put the SRL folder in your KSP/GameData folder.
 
 #### How to uninstall it ?
 
-On the space center, you need to open the SRL configuration and disabled SRL, now you can shutdown your game and delete the SRL folder in your KSP/GameData folder.
+On the space center, you need to open the SRL configuration panel and disable SRL, now you can shutdown your game and delete the SRL folder in your KSP/GameData folder.
 
 #### How does it work ?
 
@@ -53,9 +50,12 @@ This mod will not work well with all other mods that will lock/unlock the recove
 
 #### Changelog
 
-v0.30 - not published
-New: Add a panel to configure SRL.
-Fix: Now you can EVA and switch near vessel in simulation.
+v1.00 - 2014.09.13
+New: Added a configuration panel.
+New: Added a persistent file config per saved game.
+New: Added the gestion of the credits, reputation and science.
+Fix: EVA on the launchpad have been corrected.
+Fix: allowed an EVA and a switch near vessel in simulation.
 
 v0.20 - 2014.09.07
 Second beta release
@@ -74,7 +74,7 @@ Initial beta release.
 to regex for his HardMode, 
 to magico13 for his KCT,
 to my friend Neimad who corrects my bad english ...
-and to Squad for this awesome game 
+and to Squad for this awesome game.
 
 #### Links
 

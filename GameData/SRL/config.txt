@@ -1,3 +1,0 @@
-SRLenable = True
-SRLironman = True
-SRLsimulate = True
