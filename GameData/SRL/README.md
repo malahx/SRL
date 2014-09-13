@@ -51,11 +51,12 @@ This mod will not work well with all other mods that will lock/unlock the recove
 #### Changelog
 
 v1.00 - 2014.09.14
+Frist release
 - New: Added a configuration panel.
 - New: Added a persistent file config per saved game.
 - New: Added the gestion of the credits, reputation and science.
 - Fix: EVA on the launchpad have been corrected.
-- Fix: allowed an EVA and a switch near vessel in simulation.
+- Fix: allowed EVA and switch near vessel in simulation.
 
 v0.20 - 2014.09.07
 Second beta release
