@@ -63,6 +63,8 @@ Copyright 2014 Malah</Description>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SRL.cs" />
+    <Compile Include="HyperEdit_fct.cs" />
+    <Compile Include="QuickRevert_fct.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -77,9 +79,11 @@ Copyright 2014 Malah</Description>
     <None Include="GameData\SRL\SRL.version" />
     <None Include="GameData\SRL\Textures\srl.png" />
     <None Include="GameData\SRL\Textures\insim.png" />
+    <None Include="GameData\SRL\Textures\loading.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameData\SRL\PluginData\" />
     <Folder Include="GameData\SRL\PluginData\SRL\" />
+    <Folder Include="GameData\SRL\PluginData\QuickRevert\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 ﻿#### Simulate, Revert & Launch
-#### A plugin for Kerbal Space Program 0.24.2
+#### A plugin for Kerbal Space Program 0.25.0
 #### Copyright 2014 Malah
 
 This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #### What is it ?
 
-SRL is a small plugin which add the possibility to:
-- simulate a rocket from Kerbin without save/return to spacecenter/recover,
-- launch a rocket from Kerbin without revert/quicksave/quickload.
+SRL is a small plugin which adds the possibility to:
+- simulate a vessel from all celestial bodies while in orbit without save/return to spacecenter/recover,
+- launch a vessel from Kerbin without revert/quicksave/quickload.
 
 This mod will change your save game, I suggest you back up your save game before you install it.
 
@@ -46,9 +46,18 @@ Concretely this mod will change several variables of your save game as:
 
 #### Troubleshooting ?
 
-This mod will not work well with all other mods that will lock/unlock the recovery button, such as multiplayer's mods.
+This mod will not work well with:
+- all other mods that will lock/unlock the recovery button, such as multiplayer's mods,
+- mods which change planets, such as RSS or PlanetFactory.
 
 #### Changelog
+
+v1.10 - 2014.10.09
+- New: Added the simulation while in orbit on all celestial bodies (integrate HyperEdit),
+- New: Added the revert to editor (integrate QuickRevert),
+- Fix: Disabled quicksave at prelaunch,
+- Fix: You can switch to far vessel, the revert will always be for the current simulation,
+- Updated to 0.25
 
 v1.00 - 2014.09.14
 First release
@@ -70,16 +79,35 @@ The simulation's button is disabled when you are in EVA on the launchpad.
 v0.10 - 2014.09.05
 Initial beta release.
 
+#### Planned updates/new features
+
+- Add the landed simulation,
+- Add an option making that the amount of costs of a simulation is influenced by the vessel's price,
+- Add an option making that the amount of costs of a simulation is influenced by the celestial body,
+- Automatic backup the simulation for when KSP crashes,
+- Integrate to the contracts,
+- Integrate to the tech tree,
+- Integrate others mods such as Blizzy78 toolbar.
+
 #### Thanks !
 
 to regex for his HardMode, 
 to magico13 for his KCT,
+to Team HyperEdit and Ezriilc for HyperEdit,
+to all others mods developers which render this game really huge,
 to my friend Neimad who corrects my bad english ...
 and to Squad for this awesome game.
 
 #### Links
 
+http://forum.kerbalspaceprogram.com/threads/93722
 http://forum.kerbalspaceprogram.com/threads/92973
 http://beta.kerbalstuff.com/mod/145
 http://kerbal.curseforge.com/ksp-mods/224071
 https://github.com/malahx/SRL
+
+HyperEdit:
+http://forum.kerbalspaceprogram.com/threads/37756
+
+QuickRevert:
+http://forum.kerbalspaceprogram.com/threads/95168
