@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #### What is it ?
 
-SRL is a small plugin which adds the possibility to:
+SRL is a plugin which adds the possibility to:
 - simulate a vessel from all celestial bodies while in orbit without save/return to spacecenter/recover,
 - launch a vessel from Kerbin without revert/quicksave/quickload.
 
@@ -40,7 +40,6 @@ Concretely this mod will change several variables of your save game as:
 - CanQuickLoad
 - CanQuickSave
 - CanLeaveToTrackingStation
-- CanSwitchVesselsFar
 - CanAutoSave
 - CanLeaveToSpaceCenter
 
@@ -82,6 +81,7 @@ Initial beta release.
 #### Planned updates/new features
 
 - Add the landed simulation,
+- Add configurations for other system (RSS ...),
 - Add an option making that the amount of costs of a simulation is influenced by the vessel's price,
 - Add an option making that the amount of costs of a simulation is influenced by the celestial body,
 - Automatic backup the simulation for when KSP crashes,
