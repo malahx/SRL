@@ -84,6 +84,5 @@ Copyright 2014 Malah</Description>
   <ItemGroup>
     <Folder Include="GameData\SRL\PluginData\" />
     <Folder Include="GameData\SRL\PluginData\SRL\" />
-    <Folder Include="GameData\SRL\PluginData\QuickRevert\" />
   </ItemGroup>
 </Project>

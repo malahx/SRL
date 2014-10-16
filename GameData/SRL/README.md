@@ -51,6 +51,16 @@ This mod will not work well with:
 
 #### Changelog
 
+v1.20 - 2014.10.16
+New: Added an option making that the amount of costs of a simulation is influenced by the vessel's price,
+New: Added an option making that the amount of costs of a simulation is influenced by the celestial body,
+Fix: Disabled the possibility to enable/disable a simulation after the vessel moved on the launch pad / runway,
+Fix: Sometime a simulation could be disabled after the launch,
+Fix: Sometime the simulation cost could be automatically set to 0,
+Fix: Automatically detect the atmosphere altitude of a celestial body to avoid an error on the solar systems configurations files (which is planned for a next update),
+Fix: Keep the last configuration after an update,
+Fix: Some others minor fix.
+
 v1.10 - 2014.10.09
 - New: Added the simulation while in orbit on all celestial bodies (integrate HyperEdit),
 - New: Added the revert to editor (integrate QuickRevert),
@@ -81,9 +91,7 @@ Initial beta release.
 #### Planned updates/new features
 
 - Add the landed simulation,
-- Add configurations for other system (RSS ...),
-- Add an option making that the amount of costs of a simulation is influenced by the vessel's price,
-- Add an option making that the amount of costs of a simulation is influenced by the celestial body,
+- Add configurations files for other system (RSS ...),
 - Automatic backup the simulation for when KSP crashes,
 - Integrate to the contracts,
 - Integrate to the tech tree,

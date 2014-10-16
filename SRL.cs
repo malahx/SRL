@@ -30,7 +30,7 @@ namespace SRL {
 	public class SRL : MonoBehaviour {
 
 		// Initialiser les variables
-		public const string VERSION = "1.10";
+		public const string VERSION = "1.20";
 		private Texture Button_texture_sim = (Texture)GameDatabase.Instance.GetTexture ("SRL/Textures/sim", false);
 		private Texture Button_texture_srl = (Texture)GameDatabase.Instance.GetTexture ("SRL/Textures/srl", false);
 		private Texture Button_texture_insim = (Texture)GameDatabase.Instance.GetTexture ("SRL/Textures/insim", false);
@@ -43,14 +43,14 @@ namespace SRL {
 
 		private int[] CelestialBodys_def_alt = { 
 			7000, 	// Sun
-			70,   	// Kerbin
+			75,   	// Kerbin
 			15,   	// Mun
 			10,   	// Minmus
 			35,   	// Moho
 			100,  	// Eve
 			70,   	// Duna
 			15,   	// Ike
-			140,  	// Jool
+			200,  	// Jool
 			65,   	// Laythe
 			25,   	// Vall
 			25,   	// Bop
@@ -60,17 +60,19 @@ namespace SRL {
 			35,   	// Dres
 			25   	// Eeloo
 		};
+
+		// -1 == atmosphere
 		private double[] CelestialBodys_min_alt = {
 			1.35,	// Sun
-			69.1, 	// Kerbin
+			-1, 	// Kerbin
 			7.1, 	// Mun
 			5.75, 	// Minmus
 			6.85, 	// Moho
-			96.8, 	// Eve
-			41.45, 	// Duna
+			-1, 	// Eve
+			-1, 	// Duna
 			12.8, 	// Ike
-			138.2, 	// Jool
-			55.3, 	// Laythe
+			140, 	// Jool
+			-1, 	// Laythe
 			8, 		// Vall
 			21.8, 	// Bop
 			11.3, 	// Tylo
@@ -80,6 +82,7 @@ namespace SRL {
 			3.9 	// Eeloo
 		};
 
+		// -1, -1, -1 == can't land
 		private Vector3d[] CelestialBodys_land_pos = {
 			new Vector3d (-1, -1, -1), // Sun 1
 			new Vector3d (-1, -1, -1), // Sun 2
@@ -117,6 +120,43 @@ namespace SRL {
 			new Vector3d (-1, -1, -1),  // Eeloo 2
 		};
 
+		private double[] CelestialBodys_fct_price = {
+			1.2, // Sun in orbit
+			100, // Sun landed
+			1.1, // Kerbin in orbit
+			1.0, // Kerbin landed
+			1.25, // Mun in orbit
+			1.4, // Mun landed
+			1.2, // Minmus in orbit
+			1.3, // Minmus landed
+			1.85, // Moho in orbit
+			2.15, // Moho landed
+			1.5, // Eve in orbit
+			4.15, // Eve landed
+			1.3, // Duna in orbit
+			1.6, // Duna landed
+			1.4, // Ike in orbit
+			1.5, // Ike landed
+			2, // Jool in orbit
+			100, // Jool landed
+			2.5, // Laythe in orbit
+			3.15, // Laythe landed
+			2.6, // Vall in orbit
+			2.85, // Vall landed
+			2.75, // Bop in orbit
+			2.8, // Bop landed
+			2.7, // Tylo in orbit 
+			3.4, // Tylo landed
+			1.95, // Gilly in orbit
+			1.95, // Gilly landed
+			2.75, // Pol in orbit
+			2.8, // Pol landed
+			1.45, // Dres in orbit
+			1.6, // Dres landed
+			1.9,  // Eeloo in orbit
+			2.1,  // Eeloo landed
+		};
+
 		// Variables sauvegardées par session
 		[KSPField(isPersistant = true)]
 		public static bool isSimulate = false;
@@ -126,8 +166,6 @@ namespace SRL {
 		public static int CelestialBody;
 		[KSPField(isPersistant = true)]
 		private static double altitude;
-		//[KSPField(isPersistant = true)]
-		//private static Game GameBeforeLaunch;
 
 		// Variables temporaires
 		private ApplicationLauncherButton Button;
@@ -142,6 +180,7 @@ namespace SRL {
 		private bool loading = false;
 		private bool last_isSimulate = !isSimulate;
 		private double last_time = 0;
+		private double Time_FlightReady = 0;
 		private bool N_plus1 = false;
 		private Timer timer = new Timer(10000);
 		private Timer sim_timer = new Timer (2000);
@@ -171,6 +210,14 @@ namespace SRL {
 		private bool Simulation_fct_duration;
 		[Persistent]
 		private bool Simulation_fct_reputations;
+		[Persistent]
+		private bool Simulation_fct_body;
+		[Persistent]
+		private bool Simulation_fct_vessel;
+		[Persistent]
+		private double price_factor_body;
+		[Persistent]
+		private double price_factor_vessel;
 		[Persistent]
 		private int N_launch;
 		[Persistent]
@@ -257,20 +304,38 @@ namespace SRL {
 			get {
 				if (this.useCredits) {
 					int _N = this.N_launch;
-					if (this.N_plus1) {
+					if (this.N_plus1 && Planetarium.GetUniversalTime() > (this.last_time +10)) {
 						_N++;
 					}
-					double _credits = 0;
+					double _cost = 0;
 					if (this.Credits) {
-						_credits -= this.Cost_credits * _N + (this.Cost_credits / 2 * this.N_quickload);
+						_cost -= this.Cost_credits * _N + (this.Cost_credits / 2 * this.N_quickload);
 					}
 					if (this.Simulation_fct_duration) {
-						_credits -= this.Cost_credits / 20 * (this.Simulation_duration / (this.GetKerbinTime * 3600));
+						_cost -= this.Cost_credits / 20 * (this.Simulation_duration / (this.GetKerbinTime * 3600));
 					}
 					if (this.Simulation_fct_reputations) {
-						_credits *= (1 - Reputation.UnitRep / 2);
+						_cost *= (1 - Reputation.UnitRep / 2);
 					}
-					return Convert.ToSingle(Math.Round(_credits));
+					if (this.Simulation_fct_body) {
+						if (this.price_factor_body > 0 && this.Simulation_duration > 0) {
+							_cost *= this.price_factor_body / this.Simulation_duration;
+						} else {
+							if (orbit) {
+								_cost *= CelestialBodys_fct_price [CelestialBody * 2];
+							} else {
+								_cost *= CelestialBodys_fct_price [CelestialBody * 2+1];
+							}
+						}
+					}
+					if (this.Simulation_fct_vessel) {
+						if (this.price_factor_vessel > 0 && this.Simulation_duration > 0) {
+							_cost *= this.price_factor_vessel / this.Simulation_duration;
+						} else if (VesselCost > 0) {
+							_cost *= (1 + VesselCost / 100000) ;
+						}
+					}
+					return Convert.ToSingle(Math.Round(_cost));
 				} else {
 					return 0;
 				}
@@ -280,20 +345,38 @@ namespace SRL {
 			get {
 				if (this.useReputations) {
 					int _N = this.N_launch;
-					if (this.N_plus1) {
+					if (this.N_plus1 && Planetarium.GetUniversalTime() > (this.last_time +10)) {
 						_N++;
 					}
-					double _reputations = 0;
+					double _cost = 0;
 					if (this.Reputations) {
-						_reputations-= this.Cost_reputations * _N + (this.Cost_credits / 2 * this.N_quickload);
+						_cost -= this.Cost_reputations * _N + (this.Cost_credits / 2 * this.N_quickload);
 					}
 					if (this.Simulation_fct_duration) {
-						_reputations -= this.Cost_reputations / 20 * (this.Simulation_duration / (this.GetKerbinTime * 3600));
+						_cost -= this.Cost_reputations / 20 * (this.Simulation_duration / (this.GetKerbinTime * 3600));
 					}
 					if (this.Simulation_fct_reputations) {
-						_reputations *= (1 - Reputation.UnitRep / 2);
+						_cost *= (1 - Reputation.UnitRep / 2);
 					}
-					return Convert.ToSingle(Math.Round(_reputations));
+					if (this.Simulation_fct_body) {
+						if (this.price_factor_body > 0 && this.Simulation_duration > 0) {
+							_cost *= this.price_factor_body / this.Simulation_duration;
+						} else {
+							if (orbit) {
+								_cost *= CelestialBodys_fct_price [CelestialBody * 2];
+							} else {
+								_cost *= CelestialBodys_fct_price [CelestialBody * 2+1];
+							}
+						}
+					}
+					if (this.Simulation_fct_vessel) {
+						if (this.price_factor_vessel > 0 && this.Simulation_duration > 0) {
+							_cost *= this.price_factor_vessel / this.Simulation_duration;
+						} else if (VesselCost > 0) {
+							_cost *= (1 + VesselCost / 100000) ;
+						}
+					}
+					return Convert.ToSingle(Math.Round(_cost));
 				} else {
 					return 0;
 				}
@@ -303,20 +386,38 @@ namespace SRL {
 			get {
 				if (this.useSciences) {
 					int _N = this.N_launch;
-					if (this.N_plus1) {
+					if (this.N_plus1 && Planetarium.GetUniversalTime() > (this.last_time +10)) {
 						_N++;
 					}
-					double _sciences = 0;
+					double _cost = 0;
 					if (this.Sciences) {
-						_sciences -= this.Cost_sciences * _N + (this.Cost_sciences / 2 * this.N_quickload);
+						_cost -= this.Cost_sciences * _N + (this.Cost_sciences / 2 * this.N_quickload);
 					}
 					if (this.Simulation_fct_duration) {
-						_sciences -= this.Cost_sciences / 20 * (this.Simulation_duration / (this.GetKerbinTime * 3600));
+						_cost -= this.Cost_sciences / 20 * (this.Simulation_duration / (this.GetKerbinTime * 3600));
 					}
 					if (this.Simulation_fct_reputations) {
-						_sciences *= (1 - Reputation.UnitRep / 2);
+						_cost *= (1 - Reputation.UnitRep / 2);
 					}
-					return Convert.ToSingle(Math.Round(_sciences));
+					if (this.Simulation_fct_body) {
+						if (this.price_factor_body > 0 && this.Simulation_duration > 0) {
+							_cost *= this.price_factor_body / this.Simulation_duration;
+						} else {
+							if (orbit) {
+								_cost *= CelestialBodys_fct_price [CelestialBody * 2];
+							} else {
+								_cost *= CelestialBodys_fct_price [CelestialBody * 2+1];
+							}
+						}
+					}
+					if (this.Simulation_fct_vessel) {
+						if (this.price_factor_vessel > 0 && this.Simulation_duration > 0) {
+							_cost *= this.price_factor_vessel / this.Simulation_duration;
+						} else if (VesselCost > 0) {
+							_cost *= (1 + VesselCost / 100000) ;
+						}
+					}
+					return Convert.ToSingle(Math.Round(_cost));
 				} else {
 					return 0;
 				}
@@ -448,6 +549,9 @@ namespace SRL {
 					this.loading = false;
 					InputLockManager.RemoveControlLock ("SRLall");
 				}
+				if (HighLogic.LoadedSceneIsEditor || HighLogic.LoadedSceneIsFlight) {
+					this.N_plus1 = true;
+				}
 			}
 		}
 
@@ -478,17 +582,25 @@ namespace SRL {
 		// Activer le revert après un quickload
 		private void OnFlightReady() {
 			if (this.CanSimulate) {
+				this.Time_FlightReady = Planetarium.GetUniversalTime ();
 				if (this.isPrelaunch) {
 					if (ApplicationLauncher.Ready) {
-						this.Button.SetTexture (this.Button_texture_sim);
+						if (this.N_plus1) {
+							this.Button.SetTexture (this.Button_texture_sim);
+						} else {
+							this.Button.SetTexture (this.Button_texture_insim);
+						}
 					}
 					HighLogic.CurrentGame.Parameters.Flight.CanQuickSave = false;
 				} else if (isSimulate) {
 					if (QuickRevert_fct.Save_Vessel_Guid == FlightGlobals.ActiveVessel.id) {
 						this.Button.SetTexture (this.Button_texture_insim);
 						this.N_quickload++;
+						this.N_plus1 = false;
 						this.Save ();
 						HighLogic.CurrentGame.Parameters.Flight.CanQuickSave = true;
+					} else {
+						this.N_plus1 = false;
 					}
 				}
 				if (isSimulate) {
@@ -515,6 +627,7 @@ namespace SRL {
 				} else {
 					if (ApplicationLauncher.Ready) {
 						this.Button.VisibleInScenes = ApplicationLauncher.AppScenes.SPACECENTER | ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH;
+						this.N_plus1 = false;
 					}
 				}				
 			}
@@ -537,6 +650,7 @@ namespace SRL {
 				this.N_launch++;
 			}
 			this.N_plus1 = false;
+			this.Time_FlightReady = 0;
 			this.Save ();
 			HighLogic.CurrentGame.Parameters.Flight.CanQuickSave = true;
 			print ("SRL" + VERSION + ": Launch");
@@ -571,7 +685,7 @@ namespace SRL {
 				this.Window_settings = true;
 				InputLockManager.SetControlLock (ControlTypes.KSC_FACILITIES, "SRLkscfacilities");
 			} else if (HighLogic.LoadedSceneIsFlight) {
-				if (isSimulate && !this.isPrelaunch && this.isFunded && this.isFunded_sciences) {
+				if (isSimulate && !this.N_plus1 && this.isFunded && this.isFunded_sciences) {
 					this.Window_info = true;
 				} else {
 					isSimulate = true;
@@ -593,7 +707,7 @@ namespace SRL {
 				InputLockManager.RemoveControlLock("SRLkscfacilities");
 				this.Save ();
 			} else {
-				if (isSimulate && !this.isPrelaunch && HighLogic.LoadedSceneIsFlight) {
+				if (isSimulate && !this.N_plus1 && HighLogic.LoadedSceneIsFlight) {
 					this.Window_info = false;
 				} else {
 					this.Window_simulate = false;
@@ -621,7 +735,7 @@ namespace SRL {
 
 		// Enlever la souris du bouton
 		private void Button_OnHoverOut() {
-			if ((isSimulate && this.Button_isFalse && HighLogic.LoadedSceneIsFlight) || this.isPrelaunch) {
+			if (((isSimulate && this.Button_isFalse) || this.N_plus1) && HighLogic.LoadedSceneIsFlight) {
 				this.Window_info = false;
 			}
 		}				
@@ -641,6 +755,9 @@ namespace SRL {
 					FlightDriver.CanRevertToPrelaunch = true;
 					QuickSaveLoad.fetch.AutoSaveOnQuickSave = false;
 					FlightDriver.fetch.bypassPersistence = true;
+				}
+				if (HighLogic.LoadedSceneIsEditor) {
+					this.N_plus1 = true;
 				}
 			}
 			InputLockManager.RemoveControlLock ("SRLquicksave");
@@ -669,6 +786,7 @@ namespace SRL {
 				if (HighLogic.LoadedSceneIsFlight) {
 					if (!this.isPrelaunch) {
 						this.Button.VisibleInScenes = ApplicationLauncher.AppScenes.SPACECENTER | ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH;
+						this.N_plus1 = false;
 					}
 					if (this.isIronman) {
 						FlightDriver.CanRevertToPostInit = false;
@@ -716,7 +834,9 @@ namespace SRL {
 		private void Simulation_pay() {
 			if (this.CanSimulate && !isSimulate && this.N_launch >= 1 && !HighLogic.LoadedSceneIsFlight && MessageSystem.Ready) {
 				if (this.useSimulationCost) {
-					this.N_plus1 = false;
+					if (this.N_plus1) {
+						this.N_plus1 = false;
+					}
 					string _string;
 					_string = "<b>In simulation mode, you did:\nmake <#8BED8B>" + this.N_launch + "</> launch(s),\nuse <#8BED8B>" + this.N_quickload + "</> quickload(s),\nspend <#8BED8B>" + Convert.ToInt32 (this.Simulation_duration / (this.GetKerbinTime * 3600)) + "</> day(s).</>\n\nThe simulations have cost:";
 					float _float;
@@ -745,16 +865,16 @@ namespace SRL {
 					}
 					_string += ".";
 					MessageSystem.Instance.AddMessage (new MessageSystem.Message ("Simulation ended", _string, MessageSystemButton.MessageButtonColor.ORANGE, MessageSystemButton.ButtonIcons.ALERT));
-					this.N_launch = 0;
-					this.N_quickload = 0;
-					this.Simulation_duration = 0;
-					this.Save ();
-				} else {
-					this.N_launch = 0;
-					this.N_quickload = 0;
-					this.Simulation_duration = 0;
-					this.Save ();
 				}
+				if (HighLogic.LoadedSceneIsEditor) {
+					this.N_plus1 = true;
+				}
+				this.N_launch = 0;
+				this.N_quickload = 0;
+				this.Simulation_duration = 0;
+				this.price_factor_body = 0;
+				this.price_factor_vessel = 0;
+				this.Save ();
 				print ("SRL" + VERSION + ": Simulation paid");
 			}
 		}
@@ -767,11 +887,6 @@ namespace SRL {
 						this.last_isSimulate = !isSimulate;
 					}
 					if (ApplicationLauncher.Ready) {
-						if (!this.isPrelaunch && HighLogic.LoadedSceneIsFlight && this.N_plus1) {
-							this.N_plus1 = false;
-						} else if ((this.isPrelaunch || HighLogic.LoadedSceneIsEditor) && !this.N_plus1) {
-							this.N_plus1 = true;
-						}
 						if (this.last_isSimulate != isSimulate) {
 							if (isSimulate) {
 								this.Simulation_on ();
@@ -797,7 +912,15 @@ namespace SRL {
 										}
 										this.Save ();
 									}
+									if (Planetarium.GetUniversalTime() >= this.Time_FlightReady+5 && this.Time_FlightReady > 0 && this.N_plus1 && FlightGlobals.ActiveVessel.srfSpeed >= 0.1) {
+										this.Button.VisibleInScenes = ApplicationLauncher.AppScenes.SPACECENTER | ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH;
+										this.N_plus1 = false;
+										this.Time_FlightReady = 0;
+									}
 								} else {
+									if (Planetarium.GetUniversalTime() >= this.Time_FlightReady+5 && this.Time_FlightReady > 0 && this.N_plus1 && FlightGlobals.ActiveVessel.srfSpeed >= 0.1) {
+										launch ();
+									}
 									if (GameSettings.QUICKSAVE.GetKeyDown () && HighLogic.CurrentGame.Parameters.Flight.CanQuickLoad) {
 										HighLogic.CurrentGame.Parameters.Flight.CanQuickLoad = true;
 										print ("SRL" + VERSION + ": Quickload ON");
@@ -811,6 +934,16 @@ namespace SRL {
 									_double = Planetarium.GetUniversalTime () - this.last_time;
 									if (_double > 60) {
 										this.Simulation_duration += Convert.ToInt32 (_double);
+										if (this.Simulation_fct_vessel) {
+											this.price_factor_vessel += (1 + VesselCost / 100000) * _double;
+										}
+										if (this.Simulation_fct_body) {
+											if (orbit) {
+												this.price_factor_body += CelestialBodys_fct_price [CelestialBody * 2] * _double;
+											} else {
+												this.price_factor_body += CelestialBodys_fct_price [CelestialBody * 2+1] * _double;
+											}
+										}
 										this.Save ();
 										this.last_time = Planetarium.GetUniversalTime ();
 									}
@@ -924,7 +1057,8 @@ namespace SRL {
 								_guiwidth = 250;
 								_height = Screen.height - (_guiheight + 40 + _guiinfo_height + 5);
 								_width = Screen.width - (_guiwidth + 70);
-								if (Mouse.screenPos.x > _width - Screen.height / 10 && Mouse.screenPos.y > _height - Screen.height / 10) {
+								print (Mouse.screenPos.x+ " / "+ Mouse.screenPos.y);
+								if (Mouse.screenPos.x > _width - Screen.width / 10 && Mouse.screenPos.y > _height - Screen.height / 10 && (Mouse.screenPos.x < Screen.width - 155 || Mouse.screenPos.y < Screen.height - 40)) {
 									GUI.skin = HighLogic.Skin;
 									GUILayout.Window (555, new Rect (_width, _height, _guiwidth, _guiheight), this.DrawSim, "Select the body to simulate:", GUILayout.Width (_guiwidth), GUILayout.Height (_guiheight));
 								} else {
@@ -945,9 +1079,9 @@ namespace SRL {
 					}
 					GUI.skin = HighLogic.Skin;
 					if (HighLogic.CurrentGame.Mode == Game.Modes.CAREER) {
-						_int = 450;
+						_int = 520;
 					} else if (HighLogic.CurrentGame.Mode == Game.Modes.SCIENCE_SANDBOX) {
-						_int = 390;
+						_int = 450;
 					} else {
 						_int = 250;
 					}
@@ -987,8 +1121,17 @@ namespace SRL {
 						orbit = true;
 					} 
 				}
-				altitude = this.CelestialBodys_def_alt[CelestialBody];
-			}
+				if (_body.atmosphere) {
+					double _atm_alt = Math.Round (_body.maxAtmosphereAltitude / 10000)*10;
+					if (this.CelestialBodys_def_alt[CelestialBody] < _atm_alt && this.CelestialBodys_min_alt[CelestialBody] == -1 && _body.atmosphere) {
+						altitude = _atm_alt;
+						print ("SRL" + VERSION + ": ERROR IN THE DEFAULT ALTITUDE OF " + _body.name + ".");
+					} else {
+						altitude = this.CelestialBodys_def_alt [CelestialBody];
+					}
+				} else {
+					altitude = this.CelestialBodys_def_alt [CelestialBody];
+				}			}
 			if (GUILayout.Button (_body.bodyName)) {
 				EditorLogic.fetch.launchVessel ();
 			}
@@ -1015,14 +1158,29 @@ namespace SRL {
 						orbit = true;
 					} 
 				}
-				altitude = this.CelestialBodys_def_alt[CelestialBody];
+				if (_body.atmosphere) {
+					double _atm_alt = Math.Round (_body.maxAtmosphereAltitude / 10000)*10;
+					if (this.CelestialBodys_def_alt[CelestialBody] < _atm_alt && this.CelestialBodys_min_alt[CelestialBody] == -1 && _body.atmosphere) {
+						altitude = _atm_alt;
+					} else {
+						altitude = this.CelestialBodys_def_alt [CelestialBody];
+					}
+				} else {
+					altitude = this.CelestialBodys_def_alt [CelestialBody];
+				}
 			}
 			GUILayout.EndHorizontal ();
 			if (!this.Unlock_achievements || this.Achiev_orbit.Contains (_body.bodyName)) {
 				GUILayout.BeginHorizontal (); 
 				orbit = GUILayout.Toggle (orbit, "In orbit", GUILayout.Width (90));
 				GUILayout.Space (5);
-				if (altitude < this.CelestialBodys_min_alt [CelestialBody]) {
+				double _atm_alt = Math.Round (_body.maxAtmosphereAltitude / 10000)*10;
+				if (altitude < _atm_alt && this.CelestialBodys_min_alt [CelestialBody] == -1 && _body.atmosphere) {
+					altitude = _atm_alt;
+				} else if (this.CelestialBodys_min_alt [CelestialBody] == -1 && !_body.atmosphere) {
+					altitude = this.CelestialBodys_def_alt [CelestialBody];
+					print ("SRL" + VERSION + ": ERROR IN THE MINIMUM ALTITUDE OF " + _body.name);
+				} else if (altitude < this.CelestialBodys_min_alt [CelestialBody]) {
 					altitude = this.CelestialBodys_min_alt [CelestialBody];
 				} else if (altitude > Math.Round (((_body.sphereOfInfluence - _body.Radius) / 1000) - 1)) {
 					altitude = Math.Round (((_body.sphereOfInfluence - _body.Radius) / 1000) - 1);
@@ -1183,7 +1341,7 @@ namespace SRL {
 				try {
 					this.Cost_sciences = Convert.ToInt32(_tmp);
 				} catch {
-					this.Cost_sciences = 50;
+					this.Cost_sciences = 20;
 				}
 				GUILayout.EndHorizontal ();
 				GUILayout.Space (5);
@@ -1193,6 +1351,14 @@ namespace SRL {
 				GUILayout.Space (5);
 				GUILayout.BeginHorizontal ();
 				this.Simulation_fct_reputations = GUILayout.Toggle (this.Simulation_fct_reputations, "The amount of costs is influenced by the reputation.", GUILayout.Width (400));
+				GUILayout.EndHorizontal ();
+				GUILayout.Space (5);
+				GUILayout.BeginHorizontal ();
+				this.Simulation_fct_body = GUILayout.Toggle (this.Simulation_fct_body, "The amount of costs is influenced by the celestial body.", GUILayout.Width (400));
+				GUILayout.EndHorizontal ();
+				GUILayout.Space (5);
+				GUILayout.BeginHorizontal ();
+				this.Simulation_fct_vessel = GUILayout.Toggle (this.Simulation_fct_vessel, "The amount of costs is influenced by the price of the vessel.", GUILayout.Width (400));
 				GUILayout.EndHorizontal ();
 				GUILayout.Space (5);
 			}
@@ -1253,7 +1419,6 @@ namespace SRL {
 				}
 				if (this.Achiev_land.Count <= 1) {
 					this.Achiev_land = new List<string> { "Kerbin" };
-					this.Save ();
 				}
 			} else {
 				this.Reset ();
@@ -1261,24 +1426,36 @@ namespace SRL {
 		}
 		public void Reset() {
 			this.VERSION_config = VERSION;
-			this.enable = true;
-			this.ironman = true;
-			this.simulate = true;
-			this.Credits = true;
-			this.Reputations = true;
-			this.Sciences = false;
-			this.Simulation_fct_duration = true;
-			this.Simulation_fct_reputations = true;
-			this.Cost_credits = 1000;
-			this.Cost_reputations = 50;
-			this.Cost_sciences = 20;
+			if (!System.IO.File.Exists (this.Path_settings + HighLogic.SaveFolder + "-config.txt")) {
+				this.enable = true;
+				this.ironman = true;
+				this.simulate = true;
+				this.Credits = true;
+				this.Reputations = true;
+				this.Sciences = false;
+				this.Simulation_fct_duration = true;
+				this.Simulation_fct_reputations = true;
+				this.Simulation_fct_body = false;
+				this.Simulation_fct_vessel = true;
+				this.Unlock_achievements = true;
+				if (this.Achiev_land.Count <= 1) {
+					this.Achiev_land = new List<string> { "Kerbin" };
+				}
+			}
+			if (this.Cost_credits <= 0) {
+				this.Cost_credits = 1000;
+			}
+			if (this.Cost_reputations <= 0) {
+				this.Cost_reputations = 50;
+			}
+			if (this.Cost_sciences <= 0) {
+				this.Cost_sciences = 20;
+			}
+			this.price_factor_body = 0;
+			this.price_factor_vessel = 0;
 			this.N_launch = 0;
 			this.N_quickload = 0;
 			this.Simulation_duration = 0;
-			this.Unlock_achievements = true;
-			if (this.Achiev_land.Count <= 1) {
-				this.Achiev_land = new List<string> { "Kerbin" };
-			}
 			print ("SRL" + VERSION + ": Reset");
 			this.Save ();
 		}
