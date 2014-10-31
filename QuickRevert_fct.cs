@@ -24,9 +24,9 @@ using KSP;
 using UnityEngine;
 
 namespace SRL {
-	[KSPAddon(KSPAddon.Startup.MainMenu | KSPAddon.Startup.EditorAny | KSPAddon.Startup.TrackingStation | KSPAddon.Startup.Flight | KSPAddon.Startup.SpaceCentre, false)]
+	[KSPAddon(KSPAddon.Startup.EditorAny | KSPAddon.Startup.TrackingStation | KSPAddon.Startup.Flight | KSPAddon.Startup.SpaceCentre, false)]
 	public class QuickRevert_fct : MonoBehaviour {
-		public const string VERSION = "1.10";
+		public const string VERSION = "1.10-SRL";
 		private static bool isdebug = true;
 
 		[KSPField(isPersistant = true)]

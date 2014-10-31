@@ -80,9 +80,21 @@ Copyright 2014 Malah</Description>
     <None Include="GameData\SRL\Textures\srl.png" />
     <None Include="GameData\SRL\Textures\insim.png" />
     <None Include="GameData\SRL\Textures\loading.png" />
+    <None Include="GameData\SRL\TechTree\TechTree-0.cfg" />
+    <None Include="GameData\SRL\TechTree\TechTree-1.cfg" />
+    <None Include="GameData\SRL\TechTree\TechTree-2.cfg" />
+    <None Include="GameData\SRL\TechTree\TechTree-3.cfg" />
+    <None Include="GameData\SRL\TechTree\TechTree-4.cfg" />
+    <None Include="GameData\SRL\System\Kerbol.cfg" />
+    <None Include="GameData\SRL\System\RealSolarSystem.cfg" />
+    <None Include="GameData\SRL\System\Kerbol64x.cfg" />
+    <None Include="GameData\SRL\TechTree\TechTree-5.cfg" />
+    <None Include="GameData\SRL\TechTree\TechTree-6.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameData\SRL\PluginData\" />
     <Folder Include="GameData\SRL\PluginData\SRL\" />
+    <Folder Include="GameData\SRL\TechTree\" />
+    <Folder Include="GameData\SRL\System\" />
   </ItemGroup>
 </Project>

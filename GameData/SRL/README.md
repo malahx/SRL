@@ -27,6 +27,7 @@ This mod will change your save game, I suggest you back up your save game before
 #### How to install it ?
 
 Unzip all files. Put the SRL folder in your KSP/GameData folder.
+If you updating the mod, you don't need to uninstall before to install the mod. You can just copie and remplace the existing files (in that way, you can keep your previous configurations). 
 
 #### How to uninstall it ?
 
@@ -47,9 +48,23 @@ Concretely this mod will change several variables of your save game as:
 
 This mod will not work well with:
 - all other mods that will lock/unlock the recovery button, such as multiplayer's mods,
-- mods which change planets, such as RSS or PlanetFactory.
+- mods which change planets, such as PlanetFactory.
 
 #### Changelog
+
+v1.30 - 2014.10.31
+- New: Added an option to unlock the celestial bodies for a simulation with the tech tree,
+- New: Added the configurations files for others solar systems (RealSolarSystem and Kerbol 6.4x),
+- New: Added an automatic unlock for the achievements on existing savegames,
+- New: Added an option making that the amount of costs of a simulation is influenced by the penalties game difficulty,
+- New: Added an option to change the skin of the windows,
+- Fix: The achievements to unlock simulation can be made when a vessel changed SOI,
+- Fix: Corrected the panel so that it does not auto hide in the editor,
+- Fix: The orbital simulation will always be in the sunlight,
+- Fix: Deleted messages when you unlock a landed simulation (that's not yet implemented on SRL),
+- Fix: The last update blocked the quickload on simulation,
+- Fix: Some other minor fixes.
+Now, this mode is CKAN compatible !
 
 v1.20 - 2014.10.16
 - New: Added an option making that the amount of costs of a simulation is influenced by the vessel's price,
@@ -59,11 +74,11 @@ v1.20 - 2014.10.16
 - Fix: Sometime the simulation cost could be automatically set to 0,
 - Fix: Automatically detect the atmosphere altitude of a celestial body to avoid an error on the solar systems configurations files (which is planned for a next update),
 - Fix: Keep the last configuration after an update,
-- Fix: Some others minor fix.
+- Fix: Some other minor fixes.
 
 v1.10 - 2014.10.09
-- New: Added the simulation while in orbit on all celestial bodies (integrate HyperEdit),
-- New: Added the revert to editor (integrate QuickRevert),
+- New: Added the simulation while in orbit on all celestial bodies (integrate HyperEdit 1.2.4.2),
+- New: Added the revert to editor (integrate QuickRevert 1.10),
 - Fix: Disabled quicksave at prelaunch,
 - Fix: You can switch to far vessel, the revert will always be for the current simulation,
 - Updated to 0.25
@@ -91,10 +106,9 @@ Initial beta release.
 #### Planned updates/new features
 
 - Add the landed simulation,
-- Add configurations files for other system (RSS ...),
-- Automatic backup the simulation for when KSP crashes,
+- Add an automatic backup to the simulation for when KSP crashes,
+- Tweak the configurations files to easy include others solar systems with default value,
 - Integrate to the contracts,
-- Integrate to the tech tree,
 - Integrate others mods such as Blizzy78 toolbar.
 
 #### Thanks !
@@ -114,8 +128,11 @@ http://beta.kerbalstuff.com/mod/145
 http://kerbal.curseforge.com/ksp-mods/224071
 https://github.com/malahx/SRL
 
-HyperEdit:
-http://forum.kerbalspaceprogram.com/threads/37756
-
-QuickRevert:
-http://forum.kerbalspaceprogram.com/threads/95168
+HyperEdit: http://forum.kerbalspaceprogram.com/threads/37756
+QuickRevert: http://forum.kerbalspaceprogram.com/threads/95168
+RealSolarSystem: http://forum.kerbalspaceprogram.com/threads/55145
+6.4x Kerbol System: http://forum.kerbalspaceprogram.com/threads/90088
+HardMode: http://forum.kerbalspaceprogram.com/threads/78895
+KCT: http://forum.kerbalspaceprogram.com/threads/69310
+CKAN: http://forum.kerbalspaceprogram.com/threads/97434
+KSP-AVC:http://forum.kerbalspaceprogram.com/threads/79745
