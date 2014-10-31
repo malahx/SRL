@@ -64,7 +64,7 @@ v1.30 - 2014.10.31
 - Fix: Deleted messages when you unlock a landed simulation (that's not yet implemented on SRL),
 - Fix: The last update blocked the quickload on simulation,
 - Fix: Some other minor fixes.
-- Now, this mode is CKAN compatible.
+- Now, this mod is CKAN compatible.
 
 v1.20 - 2014.10.16
 - New: Added an option making that the amount of costs of a simulation is influenced by the vessel's price,
