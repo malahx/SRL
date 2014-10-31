@@ -122,17 +122,17 @@ and to Squad for this awesome game.
 
 #### Links
 
-http://forum.kerbalspaceprogram.com/threads/93722
-http://forum.kerbalspaceprogram.com/threads/92973
-http://beta.kerbalstuff.com/mod/145
-http://kerbal.curseforge.com/ksp-mods/224071
-https://github.com/malahx/SRL
+- http://forum.kerbalspaceprogram.com/threads/93722
+- http://forum.kerbalspaceprogram.com/threads/92973
+- http://beta.kerbalstuff.com/mod/145
+- http://kerbal.curseforge.com/ksp-mods/224071
+- https://github.com/malahx/SRL
 
-HyperEdit: http://forum.kerbalspaceprogram.com/threads/37756
-QuickRevert: http://forum.kerbalspaceprogram.com/threads/95168
-RealSolarSystem: http://forum.kerbalspaceprogram.com/threads/55145
-6.4x Kerbol System: http://forum.kerbalspaceprogram.com/threads/90088
-HardMode: http://forum.kerbalspaceprogram.com/threads/78895
-KCT: http://forum.kerbalspaceprogram.com/threads/69310
-CKAN: http://forum.kerbalspaceprogram.com/threads/97434
-KSP-AVC:http://forum.kerbalspaceprogram.com/threads/79745
+- HyperEdit: http://forum.kerbalspaceprogram.com/threads/37756
+- QuickRevert: http://forum.kerbalspaceprogram.com/threads/95168
+- RealSolarSystem: http://forum.kerbalspaceprogram.com/threads/55145
+- 6.4x Kerbol System: http://forum.kerbalspaceprogram.com/threads/90088
+- HardMode: http://forum.kerbalspaceprogram.com/threads/78895
+- KCT: http://forum.kerbalspaceprogram.com/threads/69310
+- CKAN: http://forum.kerbalspaceprogram.com/threads/97434
+- KSP-AVC:http://forum.kerbalspaceprogram.com/threads/79745
