@@ -34,7 +34,7 @@ namespace SRL {
 		// Initialiser les variables
 
 		// Variables internes
-		public const string VERSION = "1.30";
+		public const string VERSION = "1.31";
 
 		private static bool isdebug = true;
 		private static bool ready = false;
@@ -1649,7 +1649,6 @@ namespace SRL {
 
 		// Charger les paramètres
 		public void Load() {
-			LoadSystem ();
 			if (System.IO.File.Exists (Path_settings + HighLogic.SaveFolder + "-config.txt")) {
 				ConfigNode _temp = ConfigNode.Load (Path_settings + HighLogic.SaveFolder + "-config.txt");
 				ConfigNode.LoadObjectFromConfig (this, _temp);
@@ -1675,6 +1674,7 @@ namespace SRL {
 			} else {
 				Reset ();
 			}
+			LoadSystem ();
 		}
 		public void Reset() {
 			VERSION_config = VERSION;

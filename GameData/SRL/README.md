@@ -52,6 +52,10 @@ This mod will not work well with:
 
 #### Changelog
 
+v1.31 - 2014.11.01
+- Fix: Corrected the loading of the configurations files for others solar systems,
+- Fix: Corrected a parameter of RSS configurations files, the Moon will be properly unlocked for a simulation.
+
 v1.30 - 2014.10.31
 - New: Added an option to unlock the celestial bodies for a simulation with the tech tree,
 - New: Added the configurations files for others solar systems (RealSolarSystem and Kerbol 6.4x),
