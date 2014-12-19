@@ -34,7 +34,7 @@ namespace SRL {
 		// Initialiser les variables
 
 		// Variables internes
-		public const string VERSION = "1.32";
+		public const string VERSION = "1.33";
 
 		private static bool isdebug = true;
 		private static bool ready = false;

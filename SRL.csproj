@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SRL</RootNamespace>
     <AssemblyName>SRL</AssemblyName>
-    <ReleaseVersion>1.32</ReleaseVersion>
+    <ReleaseVersion>1.33</ReleaseVersion>
     <Description>Simulate, Revert &amp; Launch
 A plugin for Kerbal Space Program
 Copyright 2014 Malah</Description>
@@ -31,11 +31,7 @@ Copyright 2014 Malah</Description>
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp /home/malah/Code/SRL/bin/Release/SRL.dll /home/malah/Code/SRL/GameData/SRL/Plugins/" />
-        <Command type="AfterBuild" command="cp /home/malah/Code/SRL/README.md /home/malah/Code/SRL/GameData/SRL/" />
-        <Command type="AfterBuild" command="cp /home/malah/Code/SRL/COPYING /home/malah/Code/SRL/GameData/SRL/" />
-        <Command type="AfterBuild" command="cp /home/malah/Code/SRL/SRL.version /home/malah/Code/SRL/GameData/SRL/SRL.version" />
-        <Command type="AfterBuild" command="cp -rf /home/malah/Code/SRL/GameData/SRL/ &quot;/home/malah/.local/share/Steam/SteamApps/common/Kerbal Space Program/GameData/&quot;" />
+        <Command type="AfterBuild" command="./install.sh" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -78,6 +74,7 @@ Copyright 2014 Malah</Description>
     <None Include="GameData\SRL\System\Kerbol64x.cfg" />
     <None Include="GameData\SRL\TechTree\TechTree-5.cfg" />
     <None Include="GameData\SRL\TechTree\TechTree-6.cfg" />
+    <None Include="GameData\SRL\PluginData\SRL\app.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameData\SRL\PluginData\" />

@@ -52,6 +52,10 @@ This mod will not work well with:
 
 #### Changelog
 
+
+v1.33 - 2014.12.20
+- Fix: Corrected the lost PluginData folder.
+
 v1.32 - 2014.12.19
 - Updated to 0.90
 

@@ -21,6 +21,6 @@ Global
 		$1.DirectoryNamespaceAssociation = None
 		$1.ResourceNamePolicy = FileFormatDefault
 		description = @Simulate, Revert & Launch\nA plugin for Kerbal Space Program\nCopyright 2014 Malah
-		version = 1.32
+		version = 1.33
 	EndGlobalSection
 EndGlobal
