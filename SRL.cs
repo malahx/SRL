@@ -28,13 +28,13 @@ using UnityEngine;
 
 namespace SRL {
 
-	[KSPAddon(KSPAddon.Startup.EditorAny | KSPAddon.Startup.TrackingStation | KSPAddon.Startup.Flight | KSPAddon.Startup.SpaceCentre, false)]
+	[KSPAddon(KSPAddon.Startup.EveryScene, false)]
 	public class SRL : MonoBehaviour {
 
 		// Initialiser les variables
 
 		// Variables internes
-		public const string VERSION = "1.31";
+		public const string VERSION = "1.32";
 
 		private static bool isdebug = true;
 		private static bool ready = false;
@@ -1315,10 +1315,10 @@ namespace SRL {
 					Save ();
 				}
 				GUILayout.BeginHorizontal ();
-				if (GUILayout.Button ("Go to the space center.", GUILayout.Height (30))) {
+				if (GUILayout.Button ("Revert to the editor.", GUILayout.Height (30))) {
 					Window_info = false;
 					FlightDriver.SetPause (false);
-					FlightDriver.RevertToPrelaunch (GameScenes.EDITOR);
+					FlightDriver.RevertToPrelaunch (EditorFacility.VAB);
 				}
 				GUILayout.EndHorizontal ();
 				GUILayout.Space(5);

@@ -1,5 +1,5 @@
 ﻿#### Simulate, Revert & Launch
-#### A plugin for Kerbal Space Program 0.25.0
+#### A plugin for Kerbal Space Program 0.90.0
 #### Copyright 2014 Malah
 
 This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 
 
-#### What is it ?
+#### What is it?
 
 SRL is a plugin which adds the possibility to:
 - simulate a vessel from all celestial bodies while in orbit without save/return to spacecenter/recover,
@@ -24,16 +24,16 @@ SRL is a plugin which adds the possibility to:
 
 This mod will change your save game, I suggest you back up your save game before you install it.
 
-#### How to install it ?
+#### How to install it?
 
 Unzip all files. Put the SRL folder in your KSP/GameData folder.
 If you updating the mod, you don't need to uninstall before to install the mod. You can just copie and remplace the existing files (in that way, you can keep your previous configurations). 
 
-#### How to uninstall it ?
+#### How to uninstall it?
 
 On the space center, you need to open the SRL configuration panel and disable SRL, now you can shutdown your game and delete the SRL folder in your KSP/GameData folder.
 
-#### How does it work ?
+#### How does it work?
 
 Concretely this mod will change several variables of your save game as:
 - CanRestart
@@ -44,13 +44,16 @@ Concretely this mod will change several variables of your save game as:
 - CanAutoSave
 - CanLeaveToSpaceCenter
 
-#### Troubleshooting ?
+#### Troubleshooting?
 
 This mod will not work well with:
 - all other mods that will lock/unlock the recovery button, such as multiplayer's mods,
 - mods which change planets, such as PlanetFactory.
 
 #### Changelog
+
+v1.32 - 2014.12.19
+- Updated to 0.90
 
 v1.31 - 2014.11.01
 - Fix: Corrected the loading of the configurations files for others solar systems,
@@ -115,12 +118,12 @@ Initial beta release.
 - Integrate to the contracts,
 - Integrate others mods such as Blizzy78 toolbar.
 
-#### Thanks !
+#### Thanks!
 
 to regex for his HardMode, 
 to magico13 for his KCT,
 to Team HyperEdit and Ezriilc for HyperEdit,
-to all others mods developers which render this game really huge,
+to all others mods developers which make this game really huge,
 to my friend Neimad who corrects my bad english ...
 and to Squad for this awesome game.
 
@@ -139,4 +142,4 @@ and to Squad for this awesome game.
 - HardMode: http://forum.kerbalspaceprogram.com/threads/78895
 - KCT: http://forum.kerbalspaceprogram.com/threads/69310
 - CKAN: http://forum.kerbalspaceprogram.com/threads/97434
-- KSP-AVC:http://forum.kerbalspaceprogram.com/threads/79745
+- KSP-AVC: http://forum.kerbalspaceprogram.com/threads/79745

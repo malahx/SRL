@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SRL</RootNamespace>
     <AssemblyName>SRL</AssemblyName>
-    <ReleaseVersion>0.20</ReleaseVersion>
+    <ReleaseVersion>1.32</ReleaseVersion>
     <Description>Simulate, Revert &amp; Launch
 A plugin for Kerbal Space Program
 Copyright 2014 Malah</Description>
@@ -44,20 +44,8 @@ Copyright 2014 Malah</Description>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\.steam\steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\.steam\steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-UnityScript">
-      <HintPath>..\..\.steam\steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-UnityScript.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-UnityScript-firstpass">
-      <HintPath>..\..\.steam\steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\Assembly-UnityScript-firstpass.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\.steam\steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityScript.Lang">
-      <HintPath>..\..\.steam\steam\SteamApps\common\Kerbal Space Program\KSP_Data\Managed\UnityScript.Lang.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
