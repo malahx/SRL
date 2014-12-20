@@ -40,10 +40,10 @@ namespace SRL {
 		private static bool ready = false;
 
 		// Variables des textures et des dossiers
-		private Texture Button_texture_sim = (Texture)GameDatabase.Instance.GetTexture ("SRL/PluginData/SRL/Textures/sim", false);
-		private Texture Button_texture_srl = (Texture)GameDatabase.Instance.GetTexture ("SRL/PluginData/SRL/Textures/srl", false);
-		private Texture Button_texture_insim = (Texture)GameDatabase.Instance.GetTexture ("SRL/PluginData/SRL/Textures/insim", false);
-		private Texture2D Loading_Background = (Texture2D)GameDatabase.Instance.GetTexture ("SRL/PluginData/SRL/Textures/loading", false);
+		private Texture Button_texture_sim = (Texture)GameDatabase.Instance.GetTexture ("SRL/Textures/sim", false);
+		private Texture Button_texture_srl = (Texture)GameDatabase.Instance.GetTexture ("SRL/Textures/srl", false);
+		private Texture Button_texture_insim = (Texture)GameDatabase.Instance.GetTexture ("SRL/Textures/insim", false);
+		private Texture2D Loading_Background = (Texture2D)GameDatabase.Instance.GetTexture ("SRL/Textures/loading", false);
 		private string Path_settings = KSPUtil.ApplicationRootPath + "GameData/SRL/PluginData/SRL/";
 		private string Path_techtree = KSPUtil.ApplicationRootPath + "GameData/SRL/TechTree/";
 		private string Path_system = KSPUtil.ApplicationRootPath + "GameData/SRL/System/";
