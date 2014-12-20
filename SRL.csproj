@@ -49,6 +49,9 @@ Copyright 2014 Malah</Description>
     <Compile Include="SRL.cs" />
     <Compile Include="HyperEdit_fct.cs" />
     <Compile Include="QuickRevert_fct.cs" />
+    <Compile Include="GameData\SRL\PluginData\SRL\Resources.Designer.cs">
+      <DependentUpon>tmp</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -80,5 +83,11 @@ Copyright 2014 Malah</Description>
     <Folder Include="GameData\SRL\PluginData\SRL\" />
     <Folder Include="GameData\SRL\TechTree\" />
     <Folder Include="GameData\SRL\System\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GameData\SRL\PluginData\SRL\tmp">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
