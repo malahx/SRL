@@ -74,6 +74,7 @@ Copyright 2014 Malah</Description>
     <None Include="GameData\SRL\System\Kerbol64x.cfg" />
     <None Include="GameData\SRL\TechTree\TechTree-5.cfg" />
     <None Include="GameData\SRL\TechTree\TechTree-6.cfg" />
+    <None Include="GameData\SRL\PluginData\SRL\tmp" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GameData\SRL\PluginData\" />
