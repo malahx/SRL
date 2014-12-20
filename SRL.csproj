@@ -49,9 +49,6 @@ Copyright 2014 Malah</Description>
     <Compile Include="SRL.cs" />
     <Compile Include="HyperEdit_fct.cs" />
     <Compile Include="QuickRevert_fct.cs" />
-    <Compile Include="GameData\SRL\PluginData\SRL\Resources.Designer.cs">
-      <DependentUpon>tmp</DependentUpon>
-    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
