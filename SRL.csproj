@@ -81,10 +81,4 @@ Copyright 2014 Malah</Description>
     <Folder Include="GameData\SRL\TechTree\" />
     <Folder Include="GameData\SRL\System\" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="GameData\SRL\PluginData\SRL\tmp">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
 </Project>
