@@ -54,7 +54,9 @@ This mod will not work well with:
 
 
 v1.33 - 2014.12.20
-- Fix: Corrected the lost PluginData folder.
+- Fix: Corrected the lost PluginData folder,
+- Fix: Corrected the panel so that it does not auto hide in flight,
+- Fix: Some other minor fixes.
 
 v1.32 - 2014.12.19
 - Updated to 0.90

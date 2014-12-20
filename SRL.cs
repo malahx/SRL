@@ -641,7 +641,7 @@ namespace SRL {
 				}
 				if (isSimulate) {
 					if (System.IO.File.Exists (KSPUtil.ApplicationRootPath + "saves/" + HighLogic.SaveFolder + "/persistent.sfs")) {
-						if (GamePersistence.LoadGame ("persistent", HighLogic.SaveFolder, true, false).UniversalTime > QuickRevert_fct.Save_PreLaunchState.UniversalTime) {
+						if (HighLogic.CurrentGame.UniversalTime > FlightDriver.PreLaunchState.UniversalTime) {
 							GamePersistence.SaveGame (FlightDriver.PreLaunchState, "persistent", HighLogic.SaveFolder, SaveMode.OVERWRITE);
 							Debug("Keep the save");
 						}
@@ -1080,7 +1080,7 @@ namespace SRL {
 							}
 						}
 						if (HighLogic.CurrentGame.Mode == Game.Modes.SANDBOX) {
-							_i = 125;
+							_i = 85;
 						} else {
 							_i = 165;
 						}
@@ -1103,9 +1103,9 @@ namespace SRL {
 								_height = Screen.height - (_guiheight + 40 + _guiinfo_height + 5);
 								_width = Screen.width - (_guiwidth + 70);
 								if (HighLogic.CurrentGame.Mode == Game.Modes.SANDBOX) {
-									_i = 115;
-								} else {
 									_i = 155;
+								} else {
+									_i = 195;
 								}
 								if (Mouse.screenPos.x > _width - Screen.width / 10 && Mouse.screenPos.y > _height - Screen.height / 10 && (Mouse.screenPos.x < Screen.width - _i || Mouse.screenPos.y < Screen.height - 40)) {
 									GUI.skin = AssetBase.GetGUISkin(ActiveGUI);
@@ -1712,7 +1712,7 @@ namespace SRL {
 		}
 		private static void Debug(string _string) {
 			if (isdebug) {
-				print ("SRL" + VERSION + ": " + _string);
+				print ("SRL(" + VERSION + "): " + _string);
 			}
 		}
 	}
